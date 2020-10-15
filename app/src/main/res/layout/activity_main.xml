@@ -3,27 +3,100 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/ctlContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111F2B"
+    android:background="@drawable/activity_background"
     tools:context=".MainActivity">
 
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/annie_use_your_telescope"
         android:text="@string/space_explorer"
-        android:textColor="#E3F2FD"
-        android:textSize="36sp"
+        android:textAllCaps="false"
+        android:textColor="@color/textColor"
+        android:textSize="42sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintDimensionRatio="w, 1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/txvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/username"
+        android:textColor="@color/textColor"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/edtUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:textStyle="bold"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/rounded_edittext"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txvUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvUsername" />
+
+    <TextView
+        android:id="@+id/txvPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/password"
+        android:textColor="@color/textColor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/txvUsername"
+        app:layout_constraintTop_toBottomOf="@+id/txvUsername" />
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="textPassword"
+        app:passwordToggleTint="@color/black"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txvPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvPassword"
+        android:paddingStart="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:textStyle="bold"
+        />
 
     <Button
         android:id="@+id/btnConnection"
