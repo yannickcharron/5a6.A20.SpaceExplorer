@@ -2,6 +2,7 @@
     <string name="app_name">Space Explorer</string>
     <string name="space_explorer">Space Explorer</string>
     <string name="btnConnection">Connexion</string>
-    <string name="username">Nom d\'utilisateur:</string>
-    <string name="password">Mot de passe:</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="msgWelcome">Bonjour %1$s</string>
 </resources>
