@@ -38,7 +38,8 @@ class LoginActivity : AppCompatActivity() {
 
         if(password.toString() == GOOD_PASSWORD && username.isNotBlank()) {
             //TODO: Changer d'activity
-            val intent = PlanetsActivity.createIntent(this,username.toString())
+            //val intent = PlanetsActivity.createIntent(this,username.toString())
+            val intent = BikiniBottomActivity.newIntent(this,username.toString())
             startActivity(intent)
         } else {
             Toast.makeText(this, "Mauvais mot de passe", Toast.LENGTH_LONG).show()
