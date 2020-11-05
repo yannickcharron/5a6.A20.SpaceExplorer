@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.qc.cstj.spaceexplorer.adapters.PlanetRecyclerViewAdapter
 import ca.qc.cstj.spaceexplorer.helpers.TopSpacingItemDecoration
 import ca.qc.cstj.spaceexplorer.models.Planet
+import ca.qc.cstj.spaceexplorer.repositories.PlanetRepository
 import kotlinx.android.synthetic.main.fragment_planets.*
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class PlanetsFragment : Fragment() {
@@ -34,14 +38,26 @@ class PlanetsFragment : Fragment() {
 
         val topSpacingItemDecoration = TopSpacingItemDecoration(30)
 
+        //Appel à notre repository pour récupérer les planètes
+
+        val username = PlanetsFragmentArgs.fromBundle(requireActivity().intent.extras!!).username
+        txvBonjour.text = resources.getString(R.string.msgWelcome, username)
+
         //TODO: Afficher les planètes dans le Recycler View
-        planetRecyclerViewAdapter = PlanetRecyclerViewAdapter(createPlanet())
+        planetRecyclerViewAdapter = PlanetRecyclerViewAdapter()
 
         rcvPlanets.apply {
-            layoutManager = LinearLayoutManager(this.context)
+            layoutManager = GridLayoutManager(this.context,2)
             adapter = planetRecyclerViewAdapter
             addItemDecoration(topSpacingItemDecoration)
         }
+
+        lifecycleScope.launch {
+            val planets = PlanetRepository.getPlanets()
+            planetRecyclerViewAdapter.planets = planets
+            rcvPlanets.adapter!!.notifyDataSetChanged()
+        }
+
     }
 
     private fun createPlanet() : List<Planet> {

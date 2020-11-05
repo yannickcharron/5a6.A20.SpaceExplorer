@@ -14,7 +14,11 @@
         android:id="@+id/planetsFragment"
         android:name="ca.qc.cstj.spaceexplorer.PlanetsFragment"
         android:label="Planètes"
-        tools:layout="@layout/fragment_planets" />
+        tools:layout="@layout/fragment_planets" >
+        <argument
+            android:name="username"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ca.qc.cstj.spaceexplorer.SettingsFragment"

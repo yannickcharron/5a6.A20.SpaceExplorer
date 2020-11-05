@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.viewholder_planet.view.*
 import java.text.NumberFormat
 import java.util.*
 
-class PlanetRecyclerViewAdapter(private val planets: List<Planet>) : RecyclerView.Adapter<PlanetRecyclerViewAdapter.ViewHolder>() {
+class PlanetRecyclerViewAdapter(var planets: List<Planet> = listOf()) : RecyclerView.Adapter<PlanetRecyclerViewAdapter.ViewHolder>() {
 
     private lateinit var circularProgressDrawable: CircularProgressDrawable
 
@@ -52,7 +52,7 @@ class PlanetRecyclerViewAdapter(private val planets: List<Planet>) : RecyclerVie
 
             Glide.with(view.context) //Autre bibliothèque Picasso
                     .applyDefaultRequestOptions(requestOptions)
-                    .load("https://assets.andromia.science/planets/${planet.icon}.png")
+                    .load(planet.icon)
                     .into(imgIconPlanet)
 
         }
