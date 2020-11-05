@@ -5,28 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import ca.qc.cstj.spaceexplorer.adapters.PlanetRecyclerViewAdapter
+import ca.qc.cstj.spaceexplorer.helpers.TopSpacingItemDecoration
+import ca.qc.cstj.spaceexplorer.models.Planet
+import kotlinx.android.synthetic.main.fragment_planets.*
+import kotlin.random.Random
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PlanetsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PlanetsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var planetRecyclerViewAdapter : PlanetRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -37,23 +29,40 @@ class PlanetsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_planets, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val topSpacingItemDecoration = TopSpacingItemDecoration(30)
+
+        //TODO: Afficher les planètes dans le Recycler View
+        planetRecyclerViewAdapter = PlanetRecyclerViewAdapter(createPlanet())
+
+        rcvPlanets.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = planetRecyclerViewAdapter
+            addItemDecoration(topSpacingItemDecoration)
+        }
+    }
+
+    private fun createPlanet() : List<Planet> {
+        val planets = mutableListOf<Planet>()
+
+        val numberToGenerate = Random.nextInt(0,21)
+
+        for(i in 0..numberToGenerate) {
+            val newPlanet = Planet("Planet $i", Random.nextDouble(20.0, 50.0), Random.nextInt(1,25).toString())
+            planets.add(newPlanet)
+        }
+
+        return planets
+
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PlanetsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
+
         fun newInstance(param1: String, param2: String) =
             PlanetsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+                arguments = Bundle().apply {}
             }
     }
 }
