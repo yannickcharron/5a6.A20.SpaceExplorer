@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.qc.cstj.spaceexplorer.adapters.PlanetRecyclerViewAdapter
+import ca.qc.cstj.spaceexplorer.helpers.RepositoryResult
 import ca.qc.cstj.spaceexplorer.helpers.TopSpacingItemDecoration
 import ca.qc.cstj.spaceexplorer.models.Planet
 import ca.qc.cstj.spaceexplorer.repositories.PlanetRepository
@@ -47,15 +49,23 @@ class PlanetsFragment : Fragment() {
         planetRecyclerViewAdapter = PlanetRecyclerViewAdapter()
 
         rcvPlanets.apply {
-            layoutManager = GridLayoutManager(this.context,2)
+            //layoutManager = GridLayoutManager(this.context,2)
+            layoutManager = LinearLayoutManager(this.context)
             adapter = planetRecyclerViewAdapter
             addItemDecoration(topSpacingItemDecoration)
         }
 
         lifecycleScope.launch {
-            val planets = PlanetRepository.getPlanets()
-            planetRecyclerViewAdapter.planets = planets
-            rcvPlanets.adapter!!.notifyDataSetChanged()
+
+            when(val result = PlanetRepository.getPlanets()) {
+                is RepositoryResult.Success -> {
+                    planetRecyclerViewAdapter.planets = result.data
+                    rcvPlanets.adapter!!.notifyDataSetChanged()
+                }
+                is RepositoryResult.Error -> {
+                    Toast.makeText(this@PlanetsFragment.context, result.exception.message,Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
     }
@@ -66,7 +76,7 @@ class PlanetsFragment : Fragment() {
         val numberToGenerate = Random.nextInt(0,21)
 
         for(i in 0..numberToGenerate) {
-            val newPlanet = Planet("Planet $i", Random.nextDouble(20.0, 50.0), Random.nextInt(1,25).toString())
+            val newPlanet = Planet("Planet $i", Random.nextDouble(20.0, 50.0), Random.nextInt(1,25).toString(),"")
             planets.add(newPlanet)
         }
 

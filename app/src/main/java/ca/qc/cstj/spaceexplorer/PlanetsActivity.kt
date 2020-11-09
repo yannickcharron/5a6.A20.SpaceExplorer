@@ -49,7 +49,7 @@ class PlanetsActivity : AppCompatActivity() {
         val numberToGenerate = Random.nextInt(0,21)
 
         for(i in 0..numberToGenerate) {
-            val newPlanet = Planet("Planet $i", Random.nextDouble(20.0, 50.0), Random.nextInt(1,25).toString())
+            val newPlanet = Planet("Planet $i", Random.nextDouble(20.0, 50.0), Random.nextInt(1,25).toString(),"")
             planets.add(newPlanet)
         }
 

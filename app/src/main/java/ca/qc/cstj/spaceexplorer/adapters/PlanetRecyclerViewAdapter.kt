@@ -5,8 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import ca.qc.cstj.spaceexplorer.PlanetsFragmentDirections
 import ca.qc.cstj.spaceexplorer.R
 import ca.qc.cstj.spaceexplorer.models.Planet
 import com.bumptech.glide.Glide
@@ -54,6 +57,15 @@ class PlanetRecyclerViewAdapter(var planets: List<Planet> = listOf()) : Recycler
                     .applyDefaultRequestOptions(requestOptions)
                     .load(planet.icon)
                     .into(imgIconPlanet)
+
+            view.setOnClickListener {
+                Toast.makeText(it.context, planet.name, Toast.LENGTH_SHORT).show()
+
+                //val direction = PlanetsFragmentDirections.actionPlanetsFragmentToDetailPlanetFragment(planet.href, null)
+                val direction = PlanetsFragmentDirections.actionPlanetsFragmentToDetailPlanetFragmentWithPlanet(planet.href, planet)
+
+                it.findNavController().navigate(direction)
+            }
 
         }
 

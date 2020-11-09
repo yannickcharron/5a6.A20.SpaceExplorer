@@ -18,9 +18,30 @@
         <argument
             android:name="username"
             app:argType="string" />
+        <action
+            android:id="@+id/action_planetsFragment_to_detailPlanetFragment"
+            app:destination="@id/detailPlanetFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/action_planetsFragment_to_detailPlanetFragmentWithPlanet"
+            app:destination="@id/detailPlanetFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ca.qc.cstj.spaceexplorer.SettingsFragment"
         android:label="Paramètres" />
+    <fragment
+        android:id="@+id/detailPlanetFragment"
+        android:name="ca.qc.cstj.spaceexplorer.DetailPlanetFragment"
+        android:label="Détail Planet"
+        tools:layout="@layout/fragment_detail_planet">
+        <argument
+            android:name="href"
+            app:argType="string" />
+        <argument
+            android:name="planet"
+            app:argType="ca.qc.cstj.spaceexplorer.models.Planet"
+            app:nullable="true" />
+    </fragment>
 </navigation>

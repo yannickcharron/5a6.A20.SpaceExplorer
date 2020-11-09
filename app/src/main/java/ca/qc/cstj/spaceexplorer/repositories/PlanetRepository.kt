@@ -1,5 +1,6 @@
 package ca.qc.cstj.spaceexplorer.repositories
 
+import ca.qc.cstj.spaceexplorer.helpers.RepositoryResult
 import ca.qc.cstj.spaceexplorer.helpers.Services
 import ca.qc.cstj.spaceexplorer.models.Planet
 import com.github.kittinunf.fuel.httpGet
@@ -10,22 +11,24 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
+
+
 object PlanetRepository {
 
-    suspend fun getPlanets(): List<Planet> {
+    suspend fun getPlanets(): RepositoryResult<List<Planet>> {
 
         //AJAX Get
         return withContext(Dispatchers.IO) {
             //Dans un autre thread
-            val (request, response, result) = Services.PLANET_SERVICE.httpGet().responseJson()
+            val (_, _, result) = Services.PLANET_SERVICE.httpGet().responseJson()
 
             when (result) {
                 is Result.Success -> {
                     //TODO: Transformer la string en List<Planet> --> Déserialiser (DéSpécialK)
-                    Json { ignoreUnknownKeys = true }.decodeFromString(result.value.content)
+                    RepositoryResult.Success(Json { ignoreUnknownKeys = true }.decodeFromString(result.value.content))
                 }
-                else -> {
-                    listOf()
+                is Result.Failure -> {
+                    RepositoryResult.Error(result.getException())
                 }
 
             }
