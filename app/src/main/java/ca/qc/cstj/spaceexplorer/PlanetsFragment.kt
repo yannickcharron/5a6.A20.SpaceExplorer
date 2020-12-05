@@ -7,20 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.qc.cstj.spaceexplorer.adapters.PlanetRecyclerViewAdapter
+import ca.qc.cstj.spaceexplorer.databinding.FragmentHomeBinding
+import ca.qc.cstj.spaceexplorer.databinding.FragmentPlanetsBinding
 import ca.qc.cstj.spaceexplorer.helpers.RepositoryResult
 import ca.qc.cstj.spaceexplorer.helpers.TopSpacingItemDecoration
 import ca.qc.cstj.spaceexplorer.models.Planet
 import ca.qc.cstj.spaceexplorer.repositories.PlanetRepository
-import kotlinx.android.synthetic.main.fragment_planets.*
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class PlanetsFragment : Fragment() {
 
+    private var _binding : FragmentPlanetsBinding? =  null
+    private val binding get() = _binding!!
+
     private lateinit var planetRecyclerViewAdapter : PlanetRecyclerViewAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +34,9 @@ class PlanetsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_planets, container, false)
+    ): View {
+        _binding = FragmentPlanetsBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,12 +47,12 @@ class PlanetsFragment : Fragment() {
         //Appel à notre repository pour récupérer les planètes
 
         val username = PlanetsFragmentArgs.fromBundle(requireActivity().intent.extras!!).username
-        txvBonjour.text = resources.getString(R.string.msgWelcome, username)
+        binding.txvBonjour.text = resources.getString(R.string.msgWelcome, username)
 
         //TODO: Afficher les planètes dans le Recycler View
         planetRecyclerViewAdapter = PlanetRecyclerViewAdapter()
 
-        rcvPlanets.apply {
+        binding.rcvPlanets.apply {
             //layoutManager = GridLayoutManager(this.context,2)
             layoutManager = LinearLayoutManager(this.context)
             adapter = planetRecyclerViewAdapter
@@ -60,7 +64,7 @@ class PlanetsFragment : Fragment() {
             when(val result = PlanetRepository.getPlanets()) {
                 is RepositoryResult.Success -> {
                     planetRecyclerViewAdapter.planets = result.data
-                    rcvPlanets.adapter!!.notifyDataSetChanged()
+                    binding.rcvPlanets.adapter!!.notifyDataSetChanged()
                 }
                 is RepositoryResult.Error -> {
                     Toast.makeText(this@PlanetsFragment.context, result.exception.message,Toast.LENGTH_LONG).show()
@@ -86,7 +90,7 @@ class PlanetsFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             PlanetsFragment().apply {
                 arguments = Bundle().apply {}
             }

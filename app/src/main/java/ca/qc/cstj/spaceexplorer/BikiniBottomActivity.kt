@@ -8,17 +8,21 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import kotlinx.android.synthetic.main.activity_bikini_bottom.*
+import ca.qc.cstj.spaceexplorer.databinding.ActivityBikiniBottomBinding
 
 class BikiniBottomActivity : AppCompatActivity() {
+
+    private lateinit var  binding: ActivityBikiniBottomBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bikini_bottom)
+        binding = ActivityBikiniBottomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val navController = findNavController(R.id.navHostFragment)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.planetsFragment, R.id.settingsFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
-        bnvNavigation.setupWithNavController(navController)
+        binding.bnvNavigation.setupWithNavController(navController)
 
     }
 

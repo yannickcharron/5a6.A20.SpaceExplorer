@@ -8,22 +8,26 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.qc.cstj.spaceexplorer.adapters.PlanetRecyclerViewAdapter
+import ca.qc.cstj.spaceexplorer.databinding.ActivityLoginBinding
+import ca.qc.cstj.spaceexplorer.databinding.ActivityPlanetsBinding
 import ca.qc.cstj.spaceexplorer.helpers.TopSpacingItemDecoration
 import ca.qc.cstj.spaceexplorer.models.Planet
-import kotlinx.android.synthetic.main.activity_planets.*
 import kotlin.random.Random
 
 class PlanetsActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityPlanetsBinding
 
     private lateinit var planetRecyclerViewAdapter : PlanetRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_planets)
+        binding = ActivityPlanetsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val username = intent.getStringExtra(INTENT_USERNAME)
         Toast.makeText(this,username, Toast.LENGTH_LONG).show()
-        txvBonjour.text = resources.getString(R.string.msgWelcome, username)
+        binding.txvBonjour.text = resources.getString(R.string.msgWelcome, username)
 
         val topSpacingItemDecoration = TopSpacingItemDecoration(30)
 
@@ -36,7 +40,7 @@ class PlanetsActivity : AppCompatActivity() {
             addItemDecoration(topSpacingItemDecoration)
         }*/
 
-        rcvPlanets.apply {
+        binding.rcvPlanets.apply {
             layoutManager = LinearLayoutManager(this.context)
             adapter = planetRecyclerViewAdapter
             addItemDecoration(topSpacingItemDecoration)

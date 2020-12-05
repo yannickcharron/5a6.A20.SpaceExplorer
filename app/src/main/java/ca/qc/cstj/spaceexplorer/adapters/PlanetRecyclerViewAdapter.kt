@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import ca.qc.cstj.spaceexplorer.PlanetsFragmentDirections
 import ca.qc.cstj.spaceexplorer.R
+import ca.qc.cstj.spaceexplorer.databinding.ViewholderPlanetBinding
 import ca.qc.cstj.spaceexplorer.models.Planet
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.viewholder_planet.view.*
 import java.text.NumberFormat
 import java.util.*
 
@@ -41,11 +41,13 @@ class PlanetRecyclerViewAdapter(var planets: List<Planet> = listOf()) : Recycler
     override fun getItemCount(): Int = planets.size
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        //BINDING Ajout ici
+        private val binding = ViewholderPlanetBinding.bind(view)
         //TODO: Gestion de l'interface graphique d'une carte pour une planète
         //Afficher son nom et sa température
-        private val txvPlanetName: TextView = view.txvPlanetName
-        private val txvTemperature: TextView = view.txvTemperature
-        private val imgIconPlanet: ImageView = view.imgIconPlanet
+        private val txvPlanetName: TextView = binding.txvPlanetName
+        private val txvTemperature: TextView = binding.txvTemperature
+        private val imgIconPlanet: ImageView = binding.imgIconPlanet
 
         fun bind(planet: Planet) {
             txvPlanetName.text = planet.name
@@ -53,12 +55,12 @@ class PlanetRecyclerViewAdapter(var planets: List<Planet> = listOf()) : Recycler
 
             val requestOptions = RequestOptions().placeholder(circularProgressDrawable).error(R.drawable.logo)
 
-            Glide.with(view.context) //Autre bibliothèque Picasso
+            Glide.with(binding.root.context) //Autre bibliothèque Picasso
                     .applyDefaultRequestOptions(requestOptions)
                     .load(planet.icon)
                     .into(imgIconPlanet)
 
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 Toast.makeText(it.context, planet.name, Toast.LENGTH_SHORT).show()
 
                 //val direction = PlanetsFragmentDirections.actionPlanetsFragmentToDetailPlanetFragment(planet.href, null)

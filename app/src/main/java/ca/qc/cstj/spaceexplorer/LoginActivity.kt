@@ -1,15 +1,16 @@
 package ca.qc.cstj.spaceexplorer
 
-import android.app.ActivityOptions
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_login.*
+import ca.qc.cstj.spaceexplorer.databinding.ActivityBikiniBottomBinding
+import ca.qc.cstj.spaceexplorer.databinding.ActivityLoginBinding
+
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
 
     companion object {
         const val GOOD_PASSWORD = "123456"
@@ -17,7 +18,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //Afficher un message dans le TextView
         //Ancienne manière de faire avant Kotlin
@@ -28,11 +30,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun btnConnectionClick(view: View?) {
+    fun btnConnectionClick(view:View?) {
 
         //Toast.makeText(this, "Bonjour du bouton", Toast.LENGTH_LONG).show()
-        val username = edtUsername.editableText
-        val password = edtPassword.editableText
+        val username = binding.edtUsername.editableText
+        val password = binding.edtPassword.editableText
 
         //Snackbar.make(ctlContent,"Bonjour d'un Snackbar chez ${username} et mot de passe ${password}",Snackbar.LENGTH_LONG).show()
 
